@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div id="header">
+        <h1 id="page_name">Recipe Book</h1>
+        <div id="header_links">
+            <h2>Welcome, {{session.first_name}}</h2>
+            <a id = "nav" href="/new-recipe">Add Recipe</a>
+            <a id = "logout" href="/log-out">Log Out</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="recipe_container">
+            <table id="recipe_table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for one_recipe in all_recipes %}
+                    <tr>
+                        <td>
+                            <a href="/recipe/{{one_recipe.id}}" class="recipe_name">{{one_recipe.name}}</a>
+                        </td> 
+                        <td>
+                            {{one_recipe.description}}
+                        </td>
+                        <td class="action_links">
+                            <div class="action_link">
+                                <a href="/recipe/{{one_recipe.id}}" class="action_link">View</a>
+                            </div>
+                            {% if one_recipe.user_id == session['user_id'] %}
+                                <div class="action_link">
+                                    <a href="/edit/{{one_recipe.id}}" class="action_link">Edit</a>
+                                </div>
+                                <div class="action_link">
+                                    <a href="/delete/{{one_recipe.id}}" class="action_link">Delete</a>
+                                </div>
+                            {% endif %}
+                        </td>         
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

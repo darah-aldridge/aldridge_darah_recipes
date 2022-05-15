@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Edit Recipe</title>
+</head>
+<body>
+    <div id="header">
+        <h1 id="page_name">Recipe Book</h1>
+        <div id="header_links">
+            <h2>Welcome, {{session.first_name}}</h2>
+            <a id = "nav" href="/dashboard">All Recipes</a>
+            <a id = "logout" href="/log-out">Log Out</a>
+        </div>
+    </div>
+    <div class="container"> 
+        <div class="recipe_form_container">
+            <h2 id="recipe_form_name">{{recipe.name}}</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><h3>Description</h3></td>
+                        <td><p>{{recipe.description}}</p></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Under 30 Minutes?</h3></td>
+                        <td>
+                            {% if recipe.under_thirty == 1 %}
+                            <p>Yes</p>
+                            {% elif recipe.under_thirty == 0%}
+                            <p>No</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h3>Ingredients</h3></td>
+                        <td><p>{{recipe.ingredients}}</p></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Directions</h3></td>
+                        <td><p>{{recipe.directions}}</p></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Date Last Made</h3></td>
+                        <td><p>{{recipe.date_made}}</p></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <a href="/edit/{{recipe.id}}" class="recipe_action">Edit</a>
+                        <a href="/delete/{{recipe.id}}" class="recipe_action">Delete</a>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

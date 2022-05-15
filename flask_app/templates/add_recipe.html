@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Add Recipe</title>
+</head>
+<body>
+    <div id="header">
+        <h1 id="page_name">Recipe Book</h1>
+        <div id="header_links">
+            <h2>Welcome, {{session.first_name}}</h2>
+            <a id = "nav" href="/dashboard">All Recipes</a>
+            <a id = "logout" href="/log-out">Log Out</a>
+        </div>
+    </div>
+    <div class="container"> 
+        <div class="recipe_form_container">
+            <h2 id="recipe_form_name">Add a Recipe</h2>
+            <form class="recipe_form" action="/add_recipe" method="POST">
+                {% with messages = get_flashed_messages(category_filter=["recipe error"]) %}
+                    {% if messages %}
+                        {% for recipe_message in messages %}
+                            <p class="validation">{{recipe_message}}</p>-->
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="form_col">
+                    <label for="name" class="form_field" >Name</label>
+                    <input type="text" class="form_field" name="name"></input>
+
+                    <label for="description" class="form_field">Description</label>
+                    <textarea class="message" name="description"></textarea> 
+
+                    <label for="ingredients" class="form_field">Ingredients</label>
+                    <textarea class="message" name="ingredients"></textarea>
+
+                    <label for="directions" class="form_field">Directions</label>
+                    <textarea class="message" name="directions"></textarea>  
+                </div>
+                <div class="form_col">
+                    <label for="date_made" class="form_field">Date Made On:</label>
+                    <input type="date" name="date_made" id="date_field">
+                    <label class="form_field">Under 30 Minutes?</label>
+                    <div>
+                        <input type="radio" name="under_thirty" value="1">
+                        <label for="under_thirty" class="radio_field">Yes</label>
+
+                        <input type="radio" name="under_thirty" value="0">
+                        <label for="under_thirty" class="radio_field">No</label>
+                    </div>
+                    <input type="submit" class="save_recipe"value="Add Recipe"> 
+                </div>
+            </form> 
+        </div>
+    </div>
+</body>
+</html>

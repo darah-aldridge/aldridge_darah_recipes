@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Edit Recipe</title>
+</head>
+<body>
+    <div id="header">
+        <h1 id="page_name">Recipe Book</h1>
+        <div id="header_links">
+            <h2>Welcome, {{session.first_name}}</h2>
+            <a id = "nav" href="/dashboard">All Recipes</a>
+            <a id = "logout" href="/log-out">Log Out</a>
+        </div>
+    </div>
+    <div class="container"> 
+        <div class="recipe_form_container">
+            <h2 id="recipe_form_name">Edit Recipe</h2>
+            <form class="recipe_form" action="/edit_recipe/{{recipe.id}}" method="POST">
+                {% with messages = get_flashed_messages(category_filter=["recipe error"]) %}
+                    {% if messages %}
+                        {% for recipe_message in messages %}
+                            <p class="validation">{{recipe_message}}</p>-->
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="form_col">
+                    <label for="name" class="form_field" >Name</label>
+                    <input type="text" class="form_field" name="name" value="{{recipe.name}}"></input>
+
+                    <label for="description" class="form_field">Description</label>
+                    <textarea class="message" name="description">{{recipe.description}}</textarea> 
+
+                    <label for="ingredients" class="form_field">Ingredients</label>
+                    <textarea class="message" name="ingredients">{{recipe.ingredients}}</textarea>
+
+                    <label for="directions" class="form_field">Directions</label>
+                    <textarea class="message" name="directions">{{recipe.directions}}</textarea>  
+                </div>
+                <div class="form_col">
+                    <label for="date_made" class="form_field">Last made on:</label>
+                    <input type="date" name="date_made" id="date_field" value="{{recipe.date_made}}">
+                    
+                    <label class="form_field">Under 30 Minutes?</label>
+                    <div>
+                        {% if recipe.under_thirty == 1 %}
+                            <input type="radio" name="under_thirty" value="1" checked>
+                            <label for="under_thirty" class="radio_field">Yes</label>
+                            <input type="radio" name="under_thirty" value="0">
+                            <label for="under_thirty" class="radio_field">No</label>
+                        {% elif recipe.under_thirty == 0%}
+                            <input type="radio" name="under_thirty" value="1">
+                            <label for="under_thirty" class="radio_field">Yes</label>
+                            <input type="radio" name="under_thirty" value="0" checked>
+                            <label for="under_thirty" class="radio_field">No</label>
+                        {% endif %}
+                    </div>
+                    <input type="submit" class="save_recipe"value="Edit Recipe"> 
+                </div>
+            </form> 
+        </div>
+    </div>
+</body>
+</html>
